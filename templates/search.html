@@ -1,0 +1,44 @@
+{%extends "layout.html"%}
+
+{%block title%}Rent Job - Arama Sonuçları{%endblock title%}
+
+{%block body%}
+{% load crispy_forms_tags %}
+<hr>
+<h3 style="text-align: center;" class="text-info">Arama Sonuçları</h3>
+<hr>
+
+{%if autos %}
+
+{%for auto in autos %}
+
+<div class="row">
+  <div class="col-12">
+  <div class="card text-center bg-info">
+  <div class="card-header">
+    <h4>{{auto.title}}</h4>
+    Model: {{auto.year}}
+  </div>
+  <div class="card-body">
+    <p class="card-text">Vites: {{auto.gear}}</p>
+    <p class="card-text">Tip: {{auto.carClass}}</p>
+  </div>
+  <div class="card-footer text-muted">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'Autos:detail' auto.id%}" class="btn btn-info">Detay</a>
+      <a href="{% url 'Rent:rentacar'%}" class="btn btn-info">Kirala</a>
+      {% else %}
+      <a href="{% url 'Autos:detail' auto.id%}" class="btn btn-info">Detay</a>
+      {% endif %}
+  </div>
+</div></div>
+</div>
+  <hr style="border-top:1px solid aqua;">
+
+{%endfor%}
+{%else%}
+<div class="alert alert-danger">Otomobil Bulunamadı.</div>
+{%endif%}
+
+
+{%endblock body%}
